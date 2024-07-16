@@ -1,17 +1,20 @@
 "use client"
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor"
 import { Button } from '../ui/button';
 import { useUser } from '@clerk/nextjs';
 import { saveEmail } from '@/actions/saveEmail';
 import { GetEmailDetails } from '@/actions/getEmailDetails';
+import { sendEmail } from '@/shared/utils/emailSender';
+import toast from 'react-hot-toast';
 
 const Emaileditor = ({ subjectTitle }: { subjectTitle: string }) => {
     const [loading, setLoading] = useState(true);
     const [jsonData, setJsonData] = useState<any | null>(null);
     const emailEditorRef = useRef<EditorRef>(null);
     const { user } = useUser();
+    const history = useRouter();
 
     const getEmailDetails = async () => {
         console.log("Fetching email details...");
@@ -25,15 +28,30 @@ const Emaileditor = ({ subjectTitle }: { subjectTitle: string }) => {
     };
 
     useEffect(() => {
-        if (user) {
-            getEmailDetails();
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
+        getEmailDetails();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
+
+    const exportHtml = () => {
+        const unlayer = emailEditorRef.current?.editor;
+
+        unlayer?.exportHtml(async (data) => {
+            const { design, html } = data;
+            setJsonData(design);
+            await sendEmail({
+                userEmail: ["kalaiselvan1607@gmail.com"],
+                subject: subjectTitle,
+                content: html,
+            }).then((res) => {
+                toast.success("Email sent successfully!");
+                console.log(JSON.parse(res!))
+                history.push("/dashboard/write");
+            });
+        });
+    };
 
     useEffect(() => {
         if (jsonData && emailEditorRef.current?.editor) {
-            console.log("Loading design:", jsonData);
             emailEditorRef.current.editor.loadDesign(jsonData);
         }
     }, [jsonData]);
@@ -69,7 +87,7 @@ const Emaileditor = ({ subjectTitle }: { subjectTitle: string }) => {
                 <Button onClick={saveDraft} variant={'secondary'}>
                     Save Draft
                 </Button>
-                <Button>
+                <Button onClick={exportHtml}>
                     Send
                 </Button>
             </div>
