@@ -20,6 +20,7 @@ import { getEmails } from '@/actions/getEmails'
 import { Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { CirclePlus } from 'lucide-react'
+import { deleteEmail } from '@/actions/deleteEmail'
 const Write = () => {
     const [emailTitle, setEmailTitle] = useState<string>("");
     const [emails, setEmails] = useState<any>([]);
@@ -27,17 +28,19 @@ const Write = () => {
     const router = useRouter();
     const { user } = useClerk();
     useEffect(() => {
-        if (user?.id) {
-            getEmails({ newsLetterOwnerId: user.id })
-                .then(res => {
-                    const data = JSON.parse(res!);
-                    setEmails(data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
+        FindEmails()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
+    const FindEmails=async()=>{
+        await getEmails({newsLetterOwnerId:user?.id!})
+        .then(res=>{
+            const data=JSON.parse(res!);
+            setEmails(data);
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
     const handleCreate = (event: Event) => {
         event.preventDefault();
         console.log(emailTitle)
@@ -49,8 +52,13 @@ const Write = () => {
             router.push(`/dashboard/new-email?subject=${formattedTitle}`)
         }
     }
-    const deleteHandler = (emailId: string) => {
+    const deleteHandler = async(emailId: string) => {
         console.log("Deleting ", emailId)
+        await deleteEmail({emailId})
+        .then(res=>{
+            // const response=JSON.parse()
+            FindEmails();
+        })
     }
     return (
         <div className='flex gap-3'>
