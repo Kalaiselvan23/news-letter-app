@@ -15,6 +15,7 @@ import { NewspaperIcon } from "@/shared/icons"
 import { SettingsIcon, LayoutDashboardIcon, SubscriptIcon, CalendarIcon, InfoIcon, HandHelpingIcon, MenuIcon, SearchIcon } from "@/shared/icons"
 import { UserButton } from "@clerk/nextjs"
 import { UsersRound } from "lucide-react"
+import BreadCrumb from "./layout/BreadCrumb"
 
 const Layout = ({
   children,
@@ -27,7 +28,7 @@ const Layout = ({
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <TooltipProvider>
             <Link
-              href="#"
+              href="/dashboard"
               className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
               prefetch={false}
             >
@@ -37,7 +38,7 @@ const Layout = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  href="/dashboard"
                   className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   prefetch={false}
                 >
@@ -50,11 +51,24 @@ const Layout = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  href="/dashboard/write"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   prefetch={false}
                 >
                   <SubscriptIcon className="h-5 w-5" />
+                  <span className="sr-only">Write</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Write</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/dashboard/subscribers"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  prefetch={false}
+                >
+                  <CalendarIcon className="h-5 w-5" />
                   <span className="sr-only">Subscribers</span>
                 </Link>
               </TooltipTrigger>
@@ -63,33 +77,7 @@ const Layout = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  prefetch={false}
-                >
-                  <CalendarIcon className="h-5 w-5" />
-                  <span className="sr-only">Campaigns</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Campaigns</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  prefetch={false}
-                >
-                  <InfoIcon className="h-5 w-5" />
-                  <span className="sr-only">Analytics</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Analytics</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="#"
+                  href="/dashboard/settings"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   prefetch={false}
                 >
@@ -177,21 +165,7 @@ const Layout = ({
               </nav>
             </SheetContent>
           </Sheet>
-          <Breadcrumb className="hidden md:flex">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="#" prefetch={false}>
-                    Dashboard
-                  </Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Newsletter</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+       <BreadCrumb/>
           <div className="relative ml-auto flex-1 md:grow-0">
             <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
