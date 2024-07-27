@@ -2,15 +2,14 @@ import Link from "next/link"
 import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu"
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { MailOpenIcon,MenuIcon } from "@/shared/icons"
+import { MailOpenIcon, MenuIcon } from "@/shared/icons"
 import Header from "@/components/elements/header"
+import PricingCard from "@/components/home/PricingCard"
 
 export default function Page() {
-  
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      <Header/>
+      <Header />
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-24 lg:pt-32">
           <div className="container space-y-10 xl:space-y-16">
@@ -45,73 +44,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Pricing to Fit Your Needs</h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Choose the plan that works best for your newsletter. We have options for individuals and businesses of
-                all sizes.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-6">
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardTitle>Starter</CardTitle>
-                  <CardDescription>Perfect for individuals and small businesses.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col justify-between flex-1">
-                  <div>
-                    <div className="flex items-baseline justify-center space-x-2">
-                      <span className="text-4xl font-bold">$9</span>
-                      <span className="text-sm text-muted-foreground">/month</span>
-                    </div>
-                    <p className="text-center text-muted-foreground">Up to 1,000 subscribers</p>
-                  </div>
-                  <Button variant="outline" className="mt-6" as="a" href="/signup">
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardTitle>Pro</CardTitle>
-                  <CardDescription>For growing businesses and content creators.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col justify-between flex-1">
-                  <div>
-                    <div className="flex items-baseline justify-center space-x-2">
-                      <span className="text-4xl font-bold">$29</span>
-                      <span className="text-sm text-muted-foreground">/month</span>
-                    </div>
-                    <p className="text-center text-muted-foreground">Up to 10,000 subscribers</p>
-                  </div>
-                  <Button variant="outline" className="mt-6" as="a" href="/signup">
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardTitle>Enterprise</CardTitle>
-                  <CardDescription>For large businesses and organizations.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col justify-between flex-1">
-                  <div>
-                    <div className="flex items-baseline justify-center space-x-2">
-                      <span className="text-4xl font-bold">$99</span>
-                      <span className="text-sm text-muted-foreground">/month</span>
-                    </div>
-                    <p className="text-center text-muted-foreground">Unlimited subscribers</p>
-                  </div>
-                  <Button variant="outline" className="mt-6" as="a" href="/signup">
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+        <PricingCard/>
       </main>
       <footer className="bg-muted p-6 md:py-12 w-full">
         <div className="container max-w-7xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 text-sm">
